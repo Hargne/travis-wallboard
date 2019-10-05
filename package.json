@@ -1,0 +1,19 @@
+{
+  "name": "travis-wallboard",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hargne/travis-wallboard.git"
+  },
+  "author": "Johan Hargne",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Hargne/travis-wallboard/issues"
+  },
+  "homepage": "https://github.com/Hargne/travis-wallboard#readme"
+}
