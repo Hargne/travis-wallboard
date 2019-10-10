@@ -5,14 +5,35 @@ import StoreAction, { STATES, props as StoreActionProps } from 'store/storeactio
 import PropTypes from 'prop-types';
 import { APIErrorHandler, GenerateHeaders } from 'store/utils';
 
-class ProjectStore {
+class RepositoryStore {
 	constructor(rootStore) {
 		this.rootStore = rootStore;
 		extendObservable(this, {
+			allRepositories: [],
 			repositoryData: [],
 		});
 
 		this.methods = {
+			fetchRepositories: new StoreAction(() => new Promise((Resolve, Reject) => {
+				this.methods.fetchRepositories.updateState(STATES.LOADING);
+				return axios.get('https://api.travis-ci.com/repos', GenerateHeaders(this.rootStore.getAccessToken()))
+					.then((response) => {
+						this.methods.fetchRepositories.updateState(STATES.COMPLETE);
+						console.log(response.data.repositories);
+						this.allRepositories = response.data.repositories;
+						return Resolve(response.data.repositories);
+					})
+					.catch((apiError) => {
+						const errorMsg = APIErrorHandler({
+							apiError,
+							errorMessages: {
+								401: 'Authorization required',
+							},
+						});
+						this.methods.fetchRepositories.updateState(STATES.ERROR);
+						return Reject(errorMsg);
+					});
+			})),
 			fetchRepositoryBranches: new StoreAction(({ repoId, branches = ['dev', 'qa', 'master'] } = {}) => new Promise((Resolve, Reject) => {
 				this.methods.fetchRepositoryBranches.updateState(STATES.LOADING);
 				if (!repoId) {
@@ -49,6 +70,10 @@ class ProjectStore {
 		};
 	}
 
+	get userRepositories() {
+		return this.allRepositories || [];
+	}
+
 	get repositoryName() {
 		return createTransformer((id) => {
 			const repository = this.repositoryData.find((repo) => (repo.id === id));
@@ -70,16 +95,17 @@ class ProjectStore {
 		});
 	}
 }
-decorate(ProjectStore, {
+decorate(RepositoryStore, {
+	userRepositories: computed,
 	repositoryName: computed,
 	repositoryBranches: computed,
 });
 
 export const props = PropTypes.shape({
-	repositories: PropTypes.object,
 	methods: PropTypes.shape({
+		fetchRepositories: StoreActionProps,
 		fetchRepositoryBranches: StoreActionProps,
 	}),
 });
 
-export default ProjectStore;
+export default RepositoryStore;

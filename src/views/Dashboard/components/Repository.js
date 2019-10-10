@@ -1,16 +1,16 @@
 import React, { useEffect } from 'react';
 import { PropTypes } from 'prop-types';
 import { inject, observer } from 'mobx-react';
-import { props as projectStoreProps } from 'store/modules/project.store';
+import { props as repositoryStoreProps } from 'store/modules/repository.store';
 
 import { Heading, Loader } from 'components';
 import RepositoryStyle from './Repository.style';
 
 const Repository = inject((store) => ({
-	projectStore: store.rootStore.project,
-}))(observer(({ id, projectStore }) => {
+	repositoryStore: store.rootStore.repository,
+}))(observer(({ id, repositoryStore }) => {
 	const fetchBranches = () => {
-		const { run: fetchRepositoryBranches } = projectStore.methods.fetchRepositoryBranches;
+		const { run: fetchRepositoryBranches } = repositoryStore.methods.fetchRepositoryBranches;
 		fetchRepositoryBranches({ repoId: id, branches: ['dev', 'qa', 'master'] })
 			.catch(() => {});
 	};
@@ -21,12 +21,12 @@ const Repository = inject((store) => ({
 
 	return (
 		<>
-			{projectStore.methods.fetchRepositoryBranches.isLoading && (
+			{repositoryStore.methods.fetchRepositoryBranches.isLoading && (
 				<Loader />
 			)}
-			<Heading size="h4">{projectStore.repositoryName(id)}</Heading>
+			<Heading size="h4">{repositoryStore.repositoryName(id)}</Heading>
 			<RepositoryStyle.BuildContainer>
-				{projectStore.repositoryBranches(id).map((build, i) => (
+				{repositoryStore.repositoryBranches(id).map((build, i) => (
 					<RepositoryStyle.Build state={build.last_build.state} key={i}>
 						<RepositoryStyle.BuildBranch>
 							{build.name}
@@ -43,7 +43,7 @@ const Repository = inject((store) => ({
 
 Repository.propTypes = {
 	id: PropTypes.string,
-	projectStore: projectStoreProps,
+	repositoryStore: repositoryStoreProps,
 };
 
 export default Repository;

@@ -18,9 +18,11 @@ const Dashboard = inject((store) => ({
 			</Grid.Row>
 		)}
 		{authStore.accessToken && (
-			<Repository
-				id="2228645"
-			/>
+			<>
+				<Repository
+					id="2228645"
+				/>
+			</>
 		)}
 	</ViewWrapper>
 )));
