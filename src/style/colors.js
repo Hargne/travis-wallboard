@@ -79,13 +79,13 @@ const neutral = {
 const general = {
 	background: '#282c34',
 	text: 'white',
-	fadedText: '#ccc',
+	fadedText: '#888',
 	heading: '#ff4e76',
 	link: '#4e88ff',
-	panel: '#eee',
-	divider: '#eee',
-	border: '#bbb',
-	input: '#fff',
+	panel: '#202329',
+	divider: '#202329',
+	border: '#202329',
+	input: '#202329',
 };
 
 export default {
