@@ -1,12 +1,25 @@
 const primary = {
-	color: '#0747a6',
+	color: '#C3073F',
 	text: '#ffffff',
 	darker: {
-		color: '#05357b',
+		color: '#AC0028',
 		text: '#ffffff',
 	},
 	brighter: {
-		color: '#0a60de',
+		color: '#DA1E56',
+		text: '#ffffff',
+	},
+};
+
+const secondary = {
+	color: '#4E4E50',
+	text: '#ffffff',
+	darker: {
+		color: '#373739',
+		text: '#ffffff',
+	},
+	brighter: {
+		color: '#7C7C7E',
 		text: '#ffffff',
 	},
 };
@@ -90,6 +103,7 @@ const general = {
 
 export default {
 	primary,
+	secondary,
 	success,
 	danger,
 	warning,

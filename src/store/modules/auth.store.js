@@ -25,6 +25,10 @@ class AuthStore {
 	get accessToken() {
 		return this.token || localStorage.getItem('accessToken');
 	}
+
+	get isLoggedIn() {
+		return !!(this.token || localStorage.getItem('accessToken'));
+	}
 }
 
 decorate(AuthStore, {

@@ -23,26 +23,15 @@ const Dashboard = inject((store) => ({
 
 	return (
 		<ViewWrapper>
-			{!authStore.accessToken && (
-				<Grid.Row>
-					<Grid.Column />
-					<Grid.Column flex={2}>
-						<Auth />
-					</Grid.Column>
-					<Grid.Column />
-				</Grid.Row>
-			)}
-			{authStore.accessToken && (
-				<>
-					{repositories.map((repo, i) => (
-						<Repository
-							key={i}
-							id={repo.id}
-							branches={repo.branches}
-						/>
-					))}
-				</>
-			)}
+			<>
+				{repositories.map((repo, i) => (
+					<Repository
+						key={i}
+						id={repo.id}
+						branches={repo.branches}
+					/>
+				))}
+			</>
 		</ViewWrapper>
 	);
 }));
