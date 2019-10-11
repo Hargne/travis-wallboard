@@ -26,7 +26,7 @@ const Repository = inject((store) => ({
 			<div>
 				{repositoryStore.userRepositories.map((repo, i) => (
 					<div key={i}>
-						<b>{repo.name}</b>
+						<b>{repo.name}</b> ({repo.id})
 						<div>
 							{repo.description && `(${repo.description})`}
 						</div>

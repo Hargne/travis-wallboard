@@ -11,6 +11,7 @@ class RepositoryStore {
 		extendObservable(this, {
 			allRepositories: [],
 			repositoryData: [],
+			refreshInterval: 30 * (60 * 1000), // 30 min
 		});
 
 		this.methods = {
@@ -19,7 +20,6 @@ class RepositoryStore {
 				return axios.get('https://api.travis-ci.com/repos', GenerateHeaders(this.rootStore.getAccessToken()))
 					.then((response) => {
 						this.methods.fetchRepositories.updateState(STATES.COMPLETE);
-						console.log(response.data.repositories);
 						this.allRepositories = response.data.repositories;
 						return Resolve(response.data.repositories);
 					})
@@ -43,7 +43,9 @@ class RepositoryStore {
 					.then((response) => {
 						this.methods.fetchRepositoryBranches.updateState(STATES.COMPLETE);
 						// Filter out the branches we are looking for
-						const filteredBranches = response.data.branches.filter((branch) => branches.includes(branch.name));
+						let filteredBranches = response.data.branches.filter((branch) => branches.includes(branch.name));
+						// Keep the order as it was put in
+						filteredBranches = filteredBranches.sort((a, b) => branches.indexOf(a.name) - branches.indexOf(b.name));
 						// Find repository
 						const repository = this.repositoryData.find((repo) => (repo.id === repoId));
 						if (repository) {
@@ -64,6 +66,27 @@ class RepositoryStore {
 							},
 						});
 						this.methods.fetchRepositoryBranches.updateState(STATES.ERROR);
+						return Reject(errorMsg);
+					});
+			})),
+			fetchBuild: new StoreAction(({ buildId } = {}) => new Promise((Resolve, Reject) => {
+				this.methods.fetchBuild.updateState(STATES.LOADING);
+				if (!buildId) {
+					return Reject();
+				}
+				return axios.get(`https://api.travis-ci.com/build/${buildId}`, GenerateHeaders(this.rootStore.getAccessToken()))
+					.then((response) => {
+						this.methods.fetchBuild.updateState(STATES.COMPLETE);
+						return Resolve(response.data);
+					})
+					.catch((apiError) => {
+						const errorMsg = APIErrorHandler({
+							apiError,
+							errorMessages: {
+								401: 'Authorization required',
+							},
+						});
+						this.methods.fetchBuild.updateState(STATES.ERROR);
 						return Reject(errorMsg);
 					});
 			})),

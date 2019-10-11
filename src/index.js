@@ -5,6 +5,8 @@ import App from './App';
 import Store from './store';
 import * as serviceWorker from './serviceWorker';
 
+import '@fortawesome/fontawesome-free/css/all.min.css';
+
 // Setup MobX
 const rootStore = new Store();
 

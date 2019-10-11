@@ -3,46 +3,59 @@ import { PropTypes } from 'prop-types';
 import { inject, observer } from 'mobx-react';
 import { props as repositoryStoreProps } from 'store/modules/repository.store';
 
-import { Heading, Loader } from 'components';
-import RepositoryStyle from './Repository.style';
+import { Heading, Loader, Grid } from 'components';
+
+import Style from './Repository.style';
+import BranchBuild from './BranchBuild/BranchBuild';
 
 const Repository = inject((store) => ({
 	repositoryStore: store.rootStore.repository,
-}))(observer(({ id, repositoryStore }) => {
-	const fetchBranches = () => {
+}))(observer(({ id, branches, repositoryStore }) => {
+	const getBranches = () => {
 		const { run: fetchRepositoryBranches } = repositoryStore.methods.fetchRepositoryBranches;
-		fetchRepositoryBranches({ repoId: id, branches: ['dev', 'qa', 'master'] })
+		return fetchRepositoryBranches({ repoId: id, branches: branches || ['dev', 'qa', 'master'] })
 			.catch(() => {});
 	};
 
+	const getLatestBuild = (buildId) => {
+		const { run: fetchBuild } = repositoryStore.methods.fetchBuild;
+		return fetchBuild({ buildId });
+	};
+
 	useEffect(() => {
-		fetchBranches();
+		getBranches();
 	}, []);
 
 	return (
-		<>
+		<Style.Container>
 			{repositoryStore.methods.fetchRepositoryBranches.isLoading && (
 				<Loader />
 			)}
-			<Heading size="h4">{repositoryStore.repositoryName(id)}</Heading>
-			<RepositoryStyle.BuildContainer>
-				{repositoryStore.repositoryBranches(id).map((build, i) => (
-					<RepositoryStyle.Build state={build.last_build.state} key={i}>
-						<RepositoryStyle.BuildBranch>
-							{build.name}
-						</RepositoryStyle.BuildBranch>
-						<div>
-							{build.last_build.finished_at}
-						</div>
-					</RepositoryStyle.Build>
+			<Heading
+				noMargin
+				size="h3"
+			>
+				{repositoryStore.repositoryName(id)}
+			</Heading>
+			<Grid.Row>
+				{repositoryStore.repositoryBranches(id).map((branch, i) => (
+					<Grid.Column flex={0} key={i}>
+						<BranchBuild
+							key={i}
+							id={branch.last_build.id}
+							fetchLatestBuild={getLatestBuild}
+							refreshInterval={repositoryStore.refreshInterval}
+						/>
+					</Grid.Column>
 				))}
-			</RepositoryStyle.BuildContainer>
-		</>
+			</Grid.Row>
+		</Style.Container>
 	);
 }));
 
 Repository.propTypes = {
 	id: PropTypes.string,
+	branches: PropTypes.arrayOf(PropTypes.string),
 	repositoryStore: repositoryStoreProps,
 };
 
