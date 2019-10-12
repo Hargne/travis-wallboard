@@ -31,6 +31,7 @@ export default {
 		left: 0;
 		opacity: 1;
 		box-sizing: border-box;
+		margin-bottom: 2rem;
 		${(props) => !props.noPadding && `
 			padding: ${layout.padding.md};
 		`}

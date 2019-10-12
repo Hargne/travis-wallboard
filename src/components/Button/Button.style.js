@@ -24,7 +24,7 @@ const sizeRelatedStyles = (size) => {
 	}
 };
 
-const btnStyle = props => `
+const btnStyle = (props) => `
 	font-family: ${typography.font.base};
 	font-weight: ${typography.weight.bold};
 	text-align: center;
@@ -118,11 +118,11 @@ const btnStyle = props => `
 `;
 
 export default styled.button`
-	${props => btnStyle(props)}
+	${(props) => btnStyle(props)}
 `;
 
 export const LinkButton = styled(NavLink)`
-	${props => btnStyle(props)}
+	${(props) => btnStyle(props)}
 `;
 
 export const LoadingIcon = styled(Loader)`

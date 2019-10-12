@@ -26,5 +26,8 @@
 			"paths": ["src"]
 			}
 		}
+	},
+	"globals": {
+		"localStorage": true
 	}
 }

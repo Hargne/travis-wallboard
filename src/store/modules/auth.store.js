@@ -1,6 +1,6 @@
 import { decorate, computed, extendObservable } from 'mobx';
 import PropTypes from 'prop-types';
-import StoreAction, { STATES, props as StoreActionProps } from 'store/storeaction';
+import StoreAction, { props as StoreActionProps } from 'store/storeaction';
 
 class AuthStore {
 	constructor() {
@@ -10,7 +10,6 @@ class AuthStore {
 
 		this.methods = {
 			setAccessToken: new StoreAction((token) => new Promise((Resolve) => {
-				this.methods.setAccessToken.updateState(STATES.LOADING);
 				// Attempt to fetch the access token from the Local Storage
 				const accessToken = localStorage.getItem('accessToken');
 				if (!accessToken || accessToken !== token) {

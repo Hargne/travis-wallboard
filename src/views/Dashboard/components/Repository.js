@@ -9,8 +9,14 @@ import Style from './Repository.style';
 import BranchBuild from './BranchBuild/BranchBuild';
 
 const Repository = inject((store) => ({
+	userStore: store.rootStore.user,
 	repositoryStore: store.rootStore.repository,
-}))(observer(({ id, branches, repositoryStore }) => {
+}))(observer(({
+	id,
+	branches,
+	userStore,
+	repositoryStore,
+}) => {
 	const getBranches = () => {
 		const { run: fetchRepositoryBranches } = repositoryStore.methods.fetchRepositoryBranches;
 		return fetchRepositoryBranches({ repoId: id, branches: branches || ['dev', 'qa', 'master'] })
@@ -44,7 +50,7 @@ const Repository = inject((store) => ({
 							key={i}
 							id={branch.last_build.id}
 							fetchLatestBuild={getLatestBuild}
-							refreshInterval={repositoryStore.refreshInterval}
+							refreshInterval={userStore.getRefreshInterval}
 						/>
 					</Grid.Column>
 				))}

@@ -1,6 +1,6 @@
 import React from 'react';
 import { inject, observer } from 'mobx-react';
-import { ViewWrapper, Auth, Grid } from 'components';
+import { ViewWrapper } from 'components';
 
 import Repository from './components/Repository';
 

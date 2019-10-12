@@ -7,12 +7,11 @@ import {
 	ErrorMessage,
 } from 'formik';
 import * as Yup from 'yup';
-import {
-	InputField,
-	Button,
-	Grid,
-	FieldMessage,
-} from 'components';
+
+import InputField from 'components/InputField/InputField';
+import Button from 'components/Button/Button';
+import Grid from 'components/Grid/Grid';
+import FieldMessage from 'components/FieldMessage/FieldMessage';
 
 const Auth = inject((store) => ({
 	authStore: store.rootStore.auth,

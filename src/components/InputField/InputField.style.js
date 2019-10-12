@@ -11,7 +11,8 @@ export default {
 		font-size: ${typography.size.text.xs};
 		font-weight: ${typography.weight.normal};
 		background-color: ${colors.general.input};
-		color: ${colors.general.text};
+		color: ${(props) => (!props.disabled ? colors.general.text : colors.general.fadedText)};
+		opacity: ${(props) => (!props.disabled ? 1 : 0.75)};
 		padding: 1rem 1rem;
 		border: ${layout.border.width} solid;
 		border-color: ${colors.general.border};

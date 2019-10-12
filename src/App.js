@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
 import GlobalStyle from 'style/global.style';
@@ -11,7 +11,13 @@ import Login from 'views/Login/Login.view';
 
 const App = inject((store) => ({
 	authStore: store.rootStore.auth,
-}))(observer(({ authStore }) => {
+	userStore: store.rootStore.user,
+}))(observer(({ authStore, userStore }) => {
+	useEffect(() => {
+		const { run: loadUserSettings } = userStore.methods.loadSettings;
+		loadUserSettings();
+	}, []);
+
 	return (
 		<Router>
 			<div style={{ height: '100%' }}>
