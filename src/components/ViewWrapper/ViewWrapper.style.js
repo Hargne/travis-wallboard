@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 import { layout, mediaquery, colors } from 'style';
+import { navbarHeight } from 'components/Navbar/Navbar.style';
 
 export default {
 	Wrapper: styled.div`
@@ -31,7 +32,7 @@ export default {
 		left: 0;
 		opacity: 1;
 		box-sizing: border-box;
-		margin-bottom: 2rem;
+		margin-bottom: ${navbarHeight};
 		${(props) => !props.noPadding && `
 			padding: ${layout.padding.md};
 		`}

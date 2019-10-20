@@ -6,7 +6,7 @@ import Repository from './components/Repository';
 
 const Dashboard = inject((store) => ({
 	authStore: store.rootStore.auth,
-}))(observer(({ authStore }) => {
+}))(observer(() => {
 	const repositories = [
 		{
 			id: '2228645',

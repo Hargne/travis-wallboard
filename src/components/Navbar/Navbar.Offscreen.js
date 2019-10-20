@@ -26,7 +26,15 @@ const NavbarOffScreen = inject((store) => ({
 				exact
 				onClick={navbarStore.methods.close}
 			>
-				Start
+				<i className="fas fa-tachometer-alt" /> Dashboard
+			</NavbarStyle.Offscreen.Link>
+
+			<NavbarStyle.Offscreen.Link
+				to="/settings"
+				exact
+				onClick={navbarStore.methods.close}
+			>
+				<i className="fas fa-cog" /> Settings
 			</NavbarStyle.Offscreen.Link>
 
 		</NavbarStyle.Offscreen.Content>

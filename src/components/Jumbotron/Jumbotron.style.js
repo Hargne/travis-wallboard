@@ -13,13 +13,13 @@ export default {
 		overflow: hidden;
 		padding: ${layout.padding.sm};
 		box-sizing: border-box;
-		${props => props.backgroundImage && `
+		${(props) => props.backgroundImage && `
 			background: url(${props.backgroundImage});
 			background-size: cover;
 			background-position: center;
 		`}
 
-		${props => props.color && `
+		${(props) => props.color && `
 			color: ${colors[props.color].text};
 		`}
 	`,
@@ -35,7 +35,7 @@ export default {
 		top: 0;
 		opacity: 0.5;
 		background-color: #111;
-		${props => props.color && `
+		${(props) => props.color && `
 			background-color: ${colors[props.color].color};
 		`}
 	`,

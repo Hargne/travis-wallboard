@@ -7,27 +7,26 @@ import {
 } from 'style';
 import { NavLink } from 'react-router-dom';
 
-const navbarHeight = '3rem';
+export const navbarHeight = '3rem';
 const offscreenWidth = '20rem';
 
 export default {
 	Wrapper: Styled.div`
 		width: 100%;
 		box-sizing: border-box;
-		background-color: ${colors.secondary.color};
-		color: ${colors.secondary.text};
+		color: ${colors.general.text};	
 		position: fixed;
 		bottom: 0;
 		left: 0;
 		transition: all 0.3s;
-		left: 0;
 		z-index: 20;
 		${(props) => props.isOpen && 'left: 5rem;'}
 	`,
 	Container: Styled.div`
 		display: flex;
+		flex-direction: row-reverse;
 		align-items: center;
-		width: 100%;
+		height: 100%;
 		height: ${navbarHeight};
 
 		> div {
@@ -38,18 +37,24 @@ export default {
 	`,
 	Link: Styled(NavLink)`
 		color: ${colors.primary.text};
-		padding: 0 ${layout.padding.sm};
+		padding: ${layout.padding.sm};
 		height: 100%;
 		display: flex;
 		align-items: center;
+		justify-content: center;
 		font-weight: 700;
 		position: relative;
 		cursor: pointer;
 		transition: 0.3s all;
 
+		&.active {
+			background-color: ${colors.primary.color};
+			color: ${colors.primary.text};
+		}
+
 		&:hover {
-			background-color: ${colors.primary.brighter.color};
-			color: ${colors.primary.brighter.text};
+			background-color: ${colors.primary.color};
+			color: ${colors.primary.text};
 			text-decoration: none;
 		}
 	`,
@@ -57,7 +62,7 @@ export default {
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		padding: 0 ${layout.padding.sm};
+		padding: ${layout.padding.sm};
 
 		i {
 			font-size: 1.5rem;
@@ -71,7 +76,7 @@ export default {
 			width: ${offscreenWidth};
 			height: 100%;
 			box-sizing: border-box;
-			background-color: #111;
+			background-color: ${colors.general.panel};
 			color: ${colors.primary.text};
 			position: absolute;
 			z-index: 50;
@@ -87,7 +92,7 @@ export default {
 			`)}
 		`,
 		Content: Styled.div`
-			padding: ${layout.padding.md} ${layout.padding.sm} ${layout.padding.sm} ${layout.padding.sm};
+			padding: ${layout.padding.lg} ${layout.padding.sm} ${layout.padding.sm} ${layout.padding.sm};
 		`,
 		CloseIcon: Styled.i`
 			color: ${colors.primary.text};
@@ -98,7 +103,8 @@ export default {
 		`,
 		Link: Styled(NavLink)`
 			color: ${colors.primary.text};
-			padding: ${layout.padding.xs} 0;
+			padding: ${layout.padding.xs};
+			margin: ${layout.margin.xs} 0;
 			height: 100%;
 			display: flex;
 			align-items: center;
@@ -106,13 +112,19 @@ export default {
 			position: relative;
 			cursor: pointer;
 
+			&.active {
+				background: ${colors.primary.color};
+				color: ${colors.primary.text};
+			}
+
 			&:hover {
-				color: ${colors.primary.darker.text};
+				background: ${colors.primary.brighter.color};
+				color: ${colors.primary.brighter.text};
 				text-decoration: none;
 			}
 
 			i {
-				margin-left: ${layout.padding.xs};
+				margin-right: ${layout.margin.xs};
 			}
 		`,
 	},

@@ -33,7 +33,23 @@ export default {
 	`,
 	BranchName: styled.div`
 		font-weight: ${typography.weight.bold};
-		margin-bottom: ${layout.margin.xs};
+		margin-bottom: ${layout.margin.sm};
+		${(props) => {
+		switch (props.state) {
+			case 'passed':
+				return `
+					color: ${colors.success.color};
+				`;
+			case 'errored':
+				return `
+					color: ${colors.danger.color};
+				`;
+			default:
+				return `
+					color: ${colors.general.fadedText};
+				`;
+		}
+	}}
 	`,
 	AuthorAndTime: styled.span`
 		font-size: ${typography.size.text.xxs};
@@ -44,11 +60,11 @@ export default {
 		font-style: italic;
 		color: ${colors.general.fadedText};
 		flex-grow: 1;
-		margin-bottom: ${layout.margin.md};
+		padding-left: ${layout.padding.sm};
 	`,
 	Duration: styled.div`
 		font-size: ${typography.size.text.xxs};
+		margin-bottom: ${layout.margin.xs};
 		color: ${colors.general.fadedText};
-		text-align: right;
 	`,
 };

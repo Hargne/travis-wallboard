@@ -29,6 +29,12 @@ export default createGlobalStyle`
 		text-decoration: underline;
 	}
 
+	hr {
+		border: 0;
+		height: 1px;
+		background: ${colors.general.fadedText};
+	}
+
 	#app {
 		height: 100%;
 	}

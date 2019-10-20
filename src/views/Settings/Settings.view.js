@@ -8,6 +8,7 @@ import {
 	Button,
 	FieldMessage,
 	FieldLabel,
+	Jumbotron,
 } from 'components';
 
 import {
@@ -32,7 +33,6 @@ const Settings = inject((store) => ({
 	const saveSettings = (formValues) => {
 		const { run: saveUserSettings } = userStore.methods.saveSettings;
 		const { refreshInterval } = formValues;
-		console.log(formValues);
 		saveUserSettings({ refreshInterval })
 			.catch(() => {});
 	};
@@ -55,21 +55,10 @@ const Settings = inject((store) => ({
 								}}
 								render={({ isValid }) => (
 									<Form>
+										<Heading size="h6" noMargin>
+											Display Settings
+										</Heading>
 										<Grid.Row>
-											<Grid.Column>
-												<FieldLabel>Travis CI Token</FieldLabel>
-												<Field
-													name="token"
-													type="text"
-													placeholder="Travis CI token..."
-													component={InputField}
-													disabled
-												/>
-												<ErrorMessage
-													name="token"
-													component={FieldMessage}
-												/>
-											</Grid.Column>
 											<Grid.Column>
 												<FieldLabel>Refresh Interval</FieldLabel>
 												<Field
@@ -90,6 +79,7 @@ const Settings = inject((store) => ({
 											disabled={!isValid}
 											block
 											marginTop
+											marginBottom
 										>
 											Save
 										</Button>
@@ -97,8 +87,39 @@ const Settings = inject((store) => ({
 								)}
 							/>
 						)}
+						<Jumbotron color="secondary">
+							<Heading size="h6" noMargin>
+								Travis CI Token
+							</Heading>
+							<Grid.Row>
+								<Grid.Column>
+									<InputField
+										name="token"
+										type="text"
+										placeholder="Travis CI token..."
+										value={authStore.accessToken}
+										disabled
+									/>
+									<ErrorMessage
+										name="token"
+										component={FieldMessage}
+									/>
+								</Grid.Column>
+								<Grid.Column>
+									<Button
+										type="button"
+										color="danger"
+										hollow
+										block
+									>
+										Sign out
+									</Button>
+								</Grid.Column>
+							</Grid.Row>
+						</Jumbotron>
 					</Grid.Column>
-					<Grid.Column />
+					<Grid.Column>
+					</Grid.Column>
 				</Grid.Row>
 			</>
 		</ViewWrapper>
